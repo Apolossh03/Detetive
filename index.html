@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casos para Resolvermos Juntos</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0908;
+    --bg2: #111009;
+    --bg3: #181510;
+    --card: #1a1712;
+    --gold: #c9a84c;
+    --gold2: #e8c46a;
+    --red: #c0392b;
+    --cream: #f0e6cc;
+    --muted: #8a7f6e;
+    --border: rgba(201,168,76,0.2);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--cream); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  /* TOP BANNER */
+  .banner {
+    background: var(--red);
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    position: relative; z-index: 10;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%);
+  }
+  .tape {
+    display: inline-block;
+    background: var(--gold);
+    color: #000;
+    font-family: 'Special Elite', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    margin-bottom: 32px;
+    transform: rotate(-1.5deg);
+    position: relative; z-index: 2;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    position: relative; z-index: 2;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-family: 'Special Elite', serif;
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin: 20px auto 40px;
+    position: relative; z-index: 2;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: #000;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    text-decoration: none;
+    transition: all 0.2s;
+    position: relative; z-index: 2;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .cta-btn:hover { background: var(--gold2); transform: translateY(-2px); }
+
+  /* CAROUSEL */
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    z-index: 2;
+    aspect-ratio: 1 / 1;
+    background: #000;
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+    height: 100%;
+  }
+  .carousel-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+    filter: sepia(20%) contrast(1.1);
+  }
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+  .carousel-btn:hover {
+    background: rgba(201,168,76,0.3);
+  }
+  .carousel-btn.prev { left: 10px; }
+  .carousel-btn.next { right: 10px; }
+
+  .case-number {
+    position: absolute; top: 20px; right: 20px;
+    font-family: 'Special Elite', serif;
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+  }
+
+  /* SECTION BASE */
+  section { position: relative; z-index: 1; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+  .section-tag {
+    display: inline-block;
+    font-family: 'Special Elite', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-left: 2px solid var(--gold);
+    padding-left: 12px;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+
+  /* INTRO */
+  .intro { padding: 80px 0; border-top: 1px solid var(--border); }
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .intro-grid img { width: 100%; border: 1px solid var(--border); filter: sepia(30%); }
+  .intro p { color: var(--muted); line-height: 1.9; margin-bottom: 16px; }
+  .intro p strong { color: var(--cream); font-weight: 500; }
+
+  /* HOW IT WORKS */
+  .steps { padding: 80px 0; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+  .step-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 32px 24px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .step-card:hover { border-color: var(--gold); }
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(201,168,76,0.12);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .step-card img { width: 64px; height: 64px; object-fit: cover; border: 1px solid var(--border); margin-bottom: 16px; filter: sepia(40%); }
+  .step-card h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); margin-bottom: 10px; }
+  .step-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* WHAT YOU GET */
+  .deliverables { padding: 80px 0; }
+  .del-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+  .del-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 0;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .del-card:hover { transform: translateY(-4px); }
+  .del-card img { width: 100%; height: 160px; object-fit: cover; filter: sepia(30%) contrast(1.1); display: block; }
+  .del-card-body { padding: 20px; }
+  .del-card h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--gold); margin-bottom: 8px; }
+  .del-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 80px 0; background: var(--bg3); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .testi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
+  .testi-card { background: var(--card); border: 1px solid var(--border); overflow: hidden; }
+  .testi-card img { width: 100%; display: block; filter: sepia(10%); }
+
+  /* GUARANTEE */
+  .guarantee { padding: 80px 0; }
+  .guarantee-box {
+    background: var(--card);
+    border: 1px solid var(--gold);
+    padding: 48px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .guarantee-box img { width: 120px; filter: sepia(20%); }
+  .guarantee-box h2 { font-size: 36px; margin-bottom: 12px; }
+  .guarantee-box p { color: var(--muted); line-height: 1.8; }
+
+  /* OFFER */
+  .offer { padding: 80px 0; background: var(--bg2); border-top: 1px solid var(--border); }
+  .offer-card {
+    max-width: 540px; margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--gold);
+    padding: 48px;
+    text-align: center;
+    position: relative;
+  }
+  .offer-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: #000;
+    font-family: 'Special Elite', serif;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 6px 20px;
+  }
+  .offer-card img.product-img { width: 120px; filter: sepia(20%); margin: 0 auto 24px; display: block; }
+  .offer-list { text-align: left; list-style: none; margin: 24px 0; }
+  .offer-list li { font-size: 14px; color: var(--muted); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; gap: 10px; }
+  .offer-list li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+  /* TIMER */
+  .timer-label { font-size: 12px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .timer { display: flex; gap: 16px; justify-content: center; margin-bottom: 28px; }
+  .timer-unit { display: flex; flex-direction: column; align-items: center; }
+  .timer-num {
+    background: var(--bg); border: 1px solid var(--gold);
+    font-family: 'Special Elite', serif;
+    font-size: 40px; color: var(--gold);
+    width: 70px; height: 70px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .timer-label-unit { font-size: 11px; color: var(--muted); margin-top: 6px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .price-old { font-size: 16px; color: var(--muted); text-decoration: line-through; margin-bottom: 4px; }
+  .price-new { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 28px; }
+  .price-new small { font-size: 24px; }
+  .stock-warning { font-size: 13px; color: var(--red); letter-spacing: 0.05em; margin-top: 16px; }
+  .trust-badges { display: flex; gap: 16px; justify-content: center; margin-top: 24px; }
+  .trust-badges img { height: 40px; filter: grayscale(50%) opacity(0.7); }
+
+  /* FAQ */
+  .faq { padding: 80px 0; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 24px 0; cursor: pointer; }
+  .faq-q { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--cream); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  .faq-q::after { content: '+'; color: var(--gold); font-size: 24px; flex-shrink: 0; transition: transform 0.2s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { font-size: 14px; color: var(--muted); line-height: 1.8; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; }
+  .faq-item.open .faq-a { max-height: 200px; padding-top: 14px; }
+
+  /* FOOTER */
+  footer { padding: 32px 24px; text-align: center; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+
+  /* DIVIDER */
+  .divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 0 auto 48px; max-width: 400px;
+    text-align: center;
+  }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .divider span { color: var(--gold); font-family: 'Special Elite', serif; font-size: 18px; }
+
+  @keyframes pulse-btn {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+  .checkout-btn {
+    background: #45A149 !important;
+    color: #FFF !important;
+    animation: pulse-btn 1.5s infinite ease-in-out;
+  }
+  .checkout-btn:hover {
+    background: #3e9142 !important;
+  }
+
+  @media (max-width: 700px) {
+    .intro-grid, .steps-grid, .del-grid, .testi-grid { grid-template-columns: 1fr; }
+    .guarantee-box { grid-template-columns: 1fr; text-align: center; }
+    .guarantee-box img { margin: 0 auto; }
+  }
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1129488188161494');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code -->
+<!-- Meta Pixel Code 2 -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1695201625260854');
+fbq('track', 'PageView');
+</script>
+<!-- End Meta Pixel Code 2 -->
+</head>
+<body>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1129488188161494&ev=PageView&noscript=1"
+/></noscript>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
+/></noscript>
+
+<div class="banner">🔴 Desconto exclusivo — válido só hoje nessa página</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="tape">Descubra Agora • Acesso Liberado Imediatamente</div>
+  <h1>Casos para<br><span>Resolvermos</span><br>Juntos</h1>
+  <p class="hero-sub">Uma Experiência de Detetive Para Casais, Famílias e Amigos. Cada pista é uma armadilha. Cada escolha, um teste.</p>
+  <a href="#premium-offer" class="cta-btn">Descubra o Mistério 🔍</a>
+  <div style="position:relative; display:inline-block; margin-top:48px; width: min(500px, 90vw);">
+    <div class="carousel-container">
+      <div class="carousel-track" id="videoCarousel">
+        <video class="carousel-video" src="/videos/1.mp4" muted loop playsinline></video>
+        <video class="carousel-video" src="/videos/2.mp4" muted loop playsinline></video>
+        <video class="carousel-video" src="/videos/3.mp4" muted loop playsinline></video>
+        <video class="carousel-video" src="/videos/4.mp4" muted loop playsinline></video>
+      </div>
+      <button class="carousel-btn prev" onclick="moveCarousel(-1)">&#10094;</button>
+      <button class="carousel-btn next" onclick="moveCarousel(1)">&#10095;</button>
+    </div>
+    <div class="case-number">Caso #001</div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="container">
+    <div class="intro-grid">
+      <div>
+        <div class="section-tag">A Investigação Começa Aqui</div>
+        <h2>Quando Nada É o Que Parece</h2>
+        <p>Em um universo onde cada evidência pode ser manipulada e cada conclusão pode ser fatal, apenas os mais atentos sobrevivem.</p>
+        <p><strong>Cada caso traz novos enigmas, novas armadilhas, novas verdades ocultas esperando para serem desenterradas.</strong></p>
+        <p>Se você acha que pode confiar nos seus olhos, pense novamente. A única certeza é que nem tudo é o que parece ser.</p>
+        <p><strong>Mergulhe em narrativas reais repletas de suspense e desafios!</strong> Cada dossiê apresenta pistas e evidências que testarão sua lógica e habilidades de detetive.</p>
+      </div>
+      <img src="https://kdphbjyv.manus.space/images/29b2aa98-r7vzvvfauiolxepq0tie8r0928ucw3hic5vg3foz7c.webp" alt="Siga as Pistas">
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="steps">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag">Metodologia</div>
+      <h2>Como Você Resolve os Casos</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <img src="https://kdphbjyv.manus.space/images/29b2aa98-r7vzvvfauiolxepq0tie8r0928ucw3hic5vg3foz7c.webp" alt="Pistas">
+        <h3>Siga as Pistas</h3>
+        <p>Conecte as informações, identifique ligações ocultas e siga cada pista com atenção. Utilize recursos online para aprofundar sua investigação.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <img src="https://kdphbjyv.manus.space/images/3e775006-r7vzvvfauioj9ngkcxhdj85cm1n7mj4nllyj15g14m.webp" alt="Evidências">
+        <h3>Analise as Evidências</h3>
+        <p>Examine relatórios policiais e perfis de suspeitos. Cada detalhe importa para desvendar o mistério.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <img src="https://kdphbjyv.manus.space/images/b7d523d-r7vzvvfauiol3y0r1ryp3nz1uhpe1glv181xm48dn4.webp" alt="Culpado">
+        <h3>Prenda o Culpado</h3>
+        <p>Com as evidências reunidas, elimine os suspeitos até identificar o principal. Envie sua conclusão e prove que você solucionou o caso!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="deliverables">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag">O Que Você Recebe</div>
+      <h2>Seu Dossiê Completo</h2>
+    </div>
+    <div class="del-grid">
+      <div class="del-card">
+        <img src="https://kdphbjyv.manus.space/images/20250615_1201_Capturas-de-Noticias_remix_01jxt8gvv4f78a2vz1173n47vr-300x300.webp" alt="Evidências">
+        <div class="del-card-body">
+          <h3>Evidências Impactantes</h3>
+          <p>Pistas que conectam suspeitos e desvendam conspirações. Elementos surpreendentes que desafiam seu raciocínio, sem revelar o final do mistério.</p>
+        </div>
+      </div>
+      <div class="del-card">
+        <img src="https://kdphbjyv.manus.space/images/20250615_1215_Entrevista-de-Interesse-Policial_remix_01jxt99m6yfmdbbfwa8rn8z5dn-300x200.webp" alt="Documentos">
+        <div class="del-card-body">
+          <h3>Documentos Reais</h3>
+          <p>Transcrições, relatórios e registros autênticos. Depoimentos inéditos e detalhes chocantes que revelam segredos sem entregar o final.</p>
+        </div>
+      </div>
+      <div class="del-card">
+        <img src="https://kdphbjyv.manus.space/images/20250615_1158_Relatorio-de-Autopsia_remix_01jxt8bv28e4486v59wefb2p3h-300x300.webp" alt="Laudos">
+        <div class="del-card-body">
+          <h3>Laudos Forenses</h3>
+          <p>Resultados precisos da autópsia e análises que esclarecem cada pista. A ciência por trás dos fatos, trazendo realismo à investigação.</p>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--card); border:1px solid var(--border); padding:32px; margin-top:40px;">
+      <div class="section-tag">Como Funciona</div>
+      <p style="color:var(--muted); line-height:1.9; margin-bottom:16px;">Após a compra, você receberá diversos arquivos em PDF contendo:</p>
+      <ul style="color:var(--muted); padding-left:20px; line-height:2.2; font-size:14px;">
+        <li>Relatórios policiais e transcrições de chamadas de emergência</li>
+        <li>Laudos forenses e resultados detalhados da autópsia</li>
+        <li>Entrevistas exclusivas com personagens chave</li>
+        <li>Pistas e evidências intrigantes — tudo sem spoilers</li>
+        <li>Instruções passo a passo para solucionar o caso</li>
+        <li>Acesso a páginas online com pistas adicionais e solução completa</li>
+        <li>Produto digital para imprimir ou visualizar no seu dispositivo</li>
+      </ul>
+      <p style="color:var(--cream); margin-top:16px; font-weight:500;">Trabalhem juntos, usem seu raciocínio dedutivo e mergulhem em cada investigação que dura, em média, 2 horas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag">Depoimentos</div>
+      <h2>Milhares de Casais Aderiram ao Desafio</h2>
+      <p style="color:var(--muted); max-width:540px; margin:0 auto 48px; line-height:1.8;">Fortaleça sua conexão amorosa de forma única com desafios investigativos criados para casais. Quebrem a rotina e descubram juntos como resolver mistérios envolventes.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card"><img src="https://kdphbjyv.manus.space/images/whatsapp_image_2025-06-23_at_19.53.11.jpeg.webp" alt="Depoimento 1"></div>
+      <div class="testi-card"><img src="https://kdphbjyv.manus.space/images/whatsapp_image_2025-06-23_at_20.02.41.jpeg.webp" alt="Depoimento 2"></div>
+      <div class="testi-card"><img src="https://kdphbjyv.manus.space/images/whatsapp_image_2025-06-23_at_20.05.51.jpeg.webp" alt="Depoimento 3"></div>
+      <div class="testi-card"><img src="https://kdphbjyv.manus.space/images/whatsapp_image_2025-06-23_at_20.02.14.jpeg.webp" alt="Depoimento 4"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee">
+  <div class="container">
+    <div class="guarantee-box">
+      <img src="https://kdphbjyv.manus.space/images/ChatGPT-Image-6-de-jul.-de-2025-21_46_26-e1751849372723-300x277.png.webp" alt="Garantia">
+      <div>
+        <div class="section-tag">Risco Zero</div>
+        <h2>Garantia de 30 Dias</h2>
+        <p>Se você não ficar completamente satisfeito(a) com a experiência do jogo, devolvemos 100% do seu investimento — sem perguntas. Acreditamos tanto no poder dessa vivência entre casais, famílias e amigos, que você pode testar sem nenhum risco.</p>
+        <p style="margin-top:12px;">Jogue, explore os primeiros casos… e, se não for pra você, basta nos avisar em até 30 dias. Simples assim.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section class="offer" id="premium-offer">
+  <div class="container">
+    <div class="offer-card">
+      <div class="offer-badge">⭐ Mais Escolhido</div>
+      <img src="https://kdphbjyv.manus.space/images/ChatGPT-Image-6-de-jul.-de-2025-21_46_26-e1751849372723-300x277.png.webp" alt="Produto" class="product-img">
+      <h2 style="font-size:32px; margin-bottom:4px;">Premium</h2>
+      <ul class="offer-list">
+        <li>Acesso vitalício ao +20 Casos Criminais completo</li>
+        <li>PDF completo com vários documentos investigativos</li>
+        <li>Entrega instantânea para começar hoje</li>
+        <li>Solução completa disponível caso precisem de ajuda</li>
+        <li>Garantia de satisfação de 30 dias ou seu dinheiro de volta</li>
+      </ul>
+      <p class="timer-label">Oferta por tempo limitado:</p>
+      <div class="timer">
+        <div class="timer-unit">
+          <div class="timer-num" id="tmin">09</div>
+          <div class="timer-label-unit">Minutos</div>
+        </div>
+        <div class="timer-unit" style="align-self:center; margin-bottom:20px;">
+          <span style="font-family:'Special Elite'; font-size:28px; color:var(--gold);">:</span>
+        </div>
+        <div class="timer-unit">
+          <div class="timer-num" id="tsec">59</div>
+          <div class="timer-label-unit">Segundos</div>
+        </div>
+      </div>
+      <p class="price-old">De R$ 99,90 Por</p>
+      <p class="price-new" style="margin-bottom: 8px;"><small>R$</small> 57<small>,99</small></p>
+      <p style="color: var(--gold2); font-size: 20px; font-weight: 700; margin-bottom: 28px; background: rgba(201,168,76,0.15); padding: 8px 16px; border-radius: 4px; display: inline-block; border: 1px dashed var(--gold);">ou até 9x de R$ 7,44</p>
+      <a href="https://checkout.perfectpay.com.br/pay/PPU38CQAE91?" class="cta-btn checkout-btn" style="display:block; width:100%; text-align:center; font-size:18px; padding:20px;">Começar a Investigação 🔍</a>
+      <p class="stock-warning">🔴 Restam Apenas 7 Unidades Neste Valor</p>
+      <div class="trust-badges">
+        <img src="/ga.png" alt="Garantia e Segurança" style="height: 60px; filter: none;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container" style="max-width:700px">
+    <div style="text-align:center; margin-bottom:48px;">
+      <div class="section-tag">Dúvidas</div>
+      <h2>Perguntas Frequentes</h2>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Como funciona o jogo?</div>
+      <div class="faq-a">Você recebe mais de 20 casos misteriosos para resolver com seu parceiro(a), família ou amigos. Cada caso apresenta pistas, armadilhas e reviravoltas — e o desafio é descobrir a verdade juntos.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Para quem é indicado?</div>
+      <div class="faq-a">É indicado para casais, famílias e amigos que buscam uma atividade divertida e desafiadora para fazer juntos.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">É digital ou físico?</div>
+      <div class="faq-a">É um produto digital. Você receberá os arquivos em PDF para imprimir ou visualizar em seu dispositivo.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Preciso de algo para jogar?</div>
+      <div class="faq-a">Você precisará de um dispositivo para visualizar os PDFs (computador, tablet ou celular) e, se preferir, uma impressora para imprimir os documentos.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Tem garantia?</div>
+      <div class="faq-a">Sim, oferecemos 30 dias de garantia. Se não gostar, reembolsamos 100% do seu investimento.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Todos os direitos reservados</p>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+  });
+
+  // Video Carousel & Intersection Observer
+  const track = document.getElementById('videoCarousel');
+  const videos = document.querySelectorAll('.carousel-video');
+  const carouselContainer = document.querySelector('.carousel-container');
+  let currentIndex = 0;
+
+  function moveCarousel(direction) {
+    if (videos.length > 0) {
+      videos[currentIndex].pause();
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = videos.length - 1;
+      if (currentIndex >= videos.length) currentIndex = 0;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      const rect = carouselContainer.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        videos[currentIndex].play().catch(e => console.log("Autoplay prevented:", e));
+      }
+    }
+  }
+
+  if (carouselContainer && videos.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          videos[currentIndex].play().catch(e => console.log("Autoplay prevented:", e));
+        } else {
+          videos[currentIndex].pause();
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(carouselContainer);
+  }
+
+  // Countdown timer
+  let totalSeconds = 9 * 60 + 59;
+  const tmin = document.getElementById('tmin');
+  const tsec = document.getElementById('tsec');
+  function updateTimer() {
+    if (totalSeconds <= 0) { totalSeconds = 0; }
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+    tmin.textContent = String(m).padStart(2, '0');
+    tsec.textContent = String(s).padStart(2, '0');
+    totalSeconds--;
+  }
+  updateTimer();
+  setInterval(updateTimer, 1000);
+</script>
+</body>
+</html>
+
