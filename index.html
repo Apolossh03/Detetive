@@ -528,6 +528,9 @@
     color: #fff;
     text-decoration: none;
     padding: 16px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
     border-radius: 8px;
     font-weight: 700;
     font-size: 16px;
@@ -669,10 +672,10 @@ fbq('track', 'PageView');
 <div class="promo-popup-overlay" id="promoPopup">
   <div class="promo-popup">
     <img src="/ofp.avif" alt="Operação Feriado Prolongado">
-    <h2>+20 Casos Criminais Por Apenas</h2>
+    <h2>+20 Mistérios para Resolver Por Apenas</h2>
     <div class="popup-price">R$67,99 🎉</div>
     <p>Aproveite a Queima de Arquivos: o pacote completo com +20 casos sai por apenas R$67,99. E você ainda ganha acesso vitalício + entrega instantânea.</p>
-    <a href="https://checkout.perfectpay.com.br/pay/PPU38CQAE91?" class="btn-ver-casos">VER CASOS</a>
+    <button class="btn-ver-casos" onclick="document.getElementById('promoPopup').classList.remove('show')">VER CASOS</button>
     <button class="btn-close-popup" onclick="document.getElementById('promoPopup').classList.remove('show')">Não quero!</button>
   </div>
 </div>
@@ -702,7 +705,7 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
   <div style="position: relative; display: inline-block; margin-bottom: 24px;">
     <img src="/ofp.avif" alt="Descubra Agora" style="max-width: 100%; height: auto; border-radius: 8px;">
   </div>
-  <h1>Casos para<br><span>Resolvermos</span><br><span style="position: relative; display: inline-block;">Juntos<img src="https://kdphbjyv.manus.space/images/ChatGPT-Image-6-de-jul.-de-2025-21_36_11-r8dumovzfnw2ra9rn2olvsx1m1xnhhl69fn3xukrwk.png.webp" alt="Carimbo" class="stamp-overlay" id="stampOverlay"></span></h1>
+  <h1>Casos para<br><span>Resolvermos</span><br>Juntos</h1>
   <p class="hero-sub">Uma Experiência de Detetive Para Casais, Famílias e Amigos. Cada pista é uma armadilha. Cada escolha, um teste.</p>
   <a href="#premium-offer" class="cta-btn">Descubra o Mistério 🔍</a>
   <div style="position:relative; display:inline-block; margin-top:48px; width: min(500px, 90vw);">
@@ -1050,12 +1053,6 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
     }, { threshold: 0.3 });
     offerObserver.observe(offerSection);
   }
-
-  // Stamp animation trigger
-  setTimeout(() => {
-    const stamp = document.getElementById('stampOverlay');
-    if(stamp) stamp.classList.add('show');
-  }, 2000);
 
   // Promo popup trigger
   setTimeout(() => {
