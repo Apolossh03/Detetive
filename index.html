@@ -465,15 +465,15 @@ src="https://www.facebook.com/tr?id=1129488188161494&ev=PageView&noscript=1"
 src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
 /></noscript>
 
-<div class="banner">🔴 Desconto exclusivo — válido só hoje nessa página</div>
+<div class="banner">🔴 Desconto exclusivo — válido só hoje</div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="tape">Descubra Agora • Acesso Liberado Imediatamente</div>
-  <div style="position: relative; display: inline-block;">
-    <h1>Casos para<br><span>Resolvermos</span><br>Juntos</h1>
-    <img src="https://kdphbjyv.manus.space/images/ChatGPT-Image-6-de-jul.-de-2025-21_36_11-r8dumovzfnw2ra9rn2olvsx1m1xnhhl69fn3xukrwk.png.webp" alt="Carimbo" class="stamp-overlay" id="stampOverlay">
+  <div style="position: relative; display: inline-block; margin-bottom: 24px;">
+    <div class="tape" style="margin-bottom: 0;">Descubra Agora • Acesso Liberado Imediatamente</div>
+    <img src="https://kdphbjyv.manus.space/images/ChatGPT-Image-6-de-jul.-de-2025-21_36_11-r8dumovzfnw2ra9rn2olvsx1m1xnhhl69fn3xukrwk.png.webp" alt="Carimbo" class="stamp-overlay" id="stampOverlay" style="width: 200px;">
   </div>
+  <h1>Casos para<br><span>Resolvermos</span><br>Juntos</h1>
   <p class="hero-sub">Uma Experiência de Detetive Para Casais, Famílias e Amigos. Cada pista é uma armadilha. Cada escolha, um teste.</p>
   <a href="#premium-offer" class="cta-btn">Descubra o Mistério 🔍</a>
   <div style="position:relative; display:inline-block; margin-top:48px; width: min(500px, 90vw);">
@@ -716,6 +716,15 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
 </div>
 
 <script>
+  // Prevent auto-scroll to checkout on reload
+  if (window.location.hash) {
+    window.history.replaceState(null, null, window.location.pathname + window.location.search);
+  }
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
   // FAQ accordion
   document.querySelectorAll('.faq-item').forEach(item => {
     item.querySelector('.faq-q').addEventListener('click', () => {
