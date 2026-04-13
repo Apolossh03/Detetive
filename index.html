@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Casos para Resolvermos Juntos</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;700;900&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0a0908;
@@ -33,13 +33,28 @@
   /* TOP BANNER */
   .banner {
     background: var(--red);
-    text-align: center;
-    padding: 10px;
-    font-size: 13px;
-    font-weight: 500;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 900;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     position: relative; z-index: 10;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    cursor: pointer;
+  }
+  .banner-content {
+    display: flex;
+    animation: marquee-rl 40s linear infinite;
+    width: max-content;
+  }
+  .banner-text {
+    padding: 0 20px;
+  }
+  @keyframes marquee-rl {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
   }
 
   /* HERO */
@@ -269,25 +284,121 @@
     padding: 6px 20px;
   }
   .offer-card img.product-img { width: 120px; filter: sepia(20%); margin: 0 auto 24px; display: block; }
+  
+  /* PROMO ALERT */
+  .promo-alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 0;
+    margin: 16px 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    animation: slide-left-right 4s ease-in-out infinite;
+  }
+  .promo-dot {
+    width: 14px;
+    height: 14px;
+    background-color: #e60000;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(230,0,0,0.25);
+    flex-shrink: 0;
+  }
+  .promo-alert p {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+    text-align: left;
+    line-height: 1.3;
+  }
+  .promo-red {
+    color: #e60000;
+  }
+  @keyframes slide-left-right {
+    0%, 100% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+  }
+
   .offer-list { text-align: left; list-style: none; margin: 24px 0; }
   .offer-list li { font-size: 14px; color: var(--muted); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; gap: 10px; }
-  .offer-list li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+  .offer-list li::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    background-color: #45A149;
+    border-radius: 50%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+    background-size: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 2px;
+  }
 
   /* TIMER */
   .timer-label { font-size: 12px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
   .timer { display: flex; gap: 16px; justify-content: center; margin-bottom: 28px; }
   .timer-unit { display: flex; flex-direction: column; align-items: center; }
   .timer-num {
-    background: var(--bg); border: 1px solid var(--gold);
+    background: var(--bg); border: 1px solid var(--red);
     font-family: 'Special Elite', serif;
-    font-size: 40px; color: var(--gold);
+    font-size: 40px; color: var(--red);
     width: 70px; height: 70px;
     display: flex; align-items: center; justify-content: center;
   }
   .timer-label-unit { font-size: 11px; color: var(--muted); margin-top: 6px; letter-spacing: 0.1em; text-transform: uppercase; }
-  .price-old { font-size: 16px; color: var(--muted); text-decoration: line-through; margin-bottom: 4px; }
-  .price-new { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 28px; }
-  .price-new small { font-size: 24px; }
+  .price-old {
+    font-size: 20px;
+    color: #a0a0a0;
+    text-decoration: line-through;
+    margin-bottom: 0;
+    font-weight: 500;
+  }
+  .price-new {
+    font-size: 72px;
+    font-weight: 900;
+    color: #e0e0e0;
+    line-height: 1;
+    margin-bottom: 8px;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: -2px;
+  }
+  .price-new small {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .price-installments {
+    color: #e0e0e0;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 28px;
+  }
+  
+  /* NEW PRICING LAYOUT */
+  .pricing-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .discount-tag {
+    background-color: #990000;
+    color: white;
+    font-weight: 900;
+    font-size: 20px;
+    padding: 4px 12px;
+    letter-spacing: 1px;
+  }
+  .por-text {
+    font-size: 20px;
+    color: #e0e0e0;
+    margin-bottom: 8px;
+  }
   .stock-warning { font-size: 13px; color: var(--red); letter-spacing: 0.05em; margin-top: 16px; }
   .trust-badges { display: flex; gap: 16px; justify-content: center; margin-top: 24px; }
   .trust-badges img { height: 40px; filter: grayscale(50%) opacity(0.7); }
@@ -331,9 +442,9 @@
   .stamp-overlay {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-15deg) scale(2);
-    width: 280px;
+    right: -100px;
+    transform: translateY(-50%) rotate(-15deg) scale(2);
+    width: 120px;
     opacity: 0;
     pointer-events: none;
     z-index: 10;
@@ -342,7 +453,102 @@
   }
   .stamp-overlay.show {
     opacity: 0.9;
-    transform: translate(-50%, -50%) rotate(-5deg) scale(1);
+    transform: translateY(-50%) rotate(-5deg) scale(1);
+  }
+
+  @media (max-width: 700px) {
+    .stamp-overlay {
+      right: -60px;
+      width: 80px;
+    }
+  }
+
+  /* PROMO POPUP */
+  .promo-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .promo-popup-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .promo-popup {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 32px 24px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+  .promo-popup-overlay.show .promo-popup {
+    transform: translateY(0);
+  }
+  .promo-popup img {
+    max-width: 200px;
+    margin: 0 auto 24px;
+    display: block;
+  }
+  .promo-popup h2 {
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .promo-popup .popup-price {
+    font-size: 32px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .promo-popup p {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .promo-popup .btn-ver-casos {
+    display: block;
+    width: 100%;
+    background: #cc0000;
+    color: #fff;
+    text-decoration: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    transition: background 0.2s;
+  }
+  .promo-popup .btn-ver-casos:hover {
+    background: #a30000;
+  }
+  .promo-popup .btn-close-popup {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .promo-popup .btn-close-popup:hover {
+    color: #fff;
   }
 
   /* DETECTIVE POPUP */
@@ -458,6 +664,19 @@ fbq('track', 'PageView');
 <!-- End Meta Pixel Code 2 -->
 </head>
 <body>
+
+<!-- PROMO POPUP -->
+<div class="promo-popup-overlay" id="promoPopup">
+  <div class="promo-popup">
+    <img src="/ofp.avif" alt="Operação Feriado Prolongado">
+    <h2>+20 Casos Criminais Por Apenas</h2>
+    <div class="popup-price">R$67,99 🎉</div>
+    <p>Aproveite a Queima de Arquivos: o pacote completo com +20 casos sai por apenas R$67,99. E você ainda ganha acesso vitalício + entrega instantânea.</p>
+    <a href="https://checkout.perfectpay.com.br/pay/PPU38CQAE91?" class="btn-ver-casos">VER CASOS</a>
+    <button class="btn-close-popup" onclick="document.getElementById('promoPopup').classList.remove('show')">Não quero!</button>
+  </div>
+</div>
+
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1129488188161494&ev=PageView&noscript=1"
 /></noscript>
@@ -465,15 +684,25 @@ src="https://www.facebook.com/tr?id=1129488188161494&ev=PageView&noscript=1"
 src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
 /></noscript>
 
-<div class="banner">🔴 Desconto exclusivo — válido só hoje</div>
+<div class="banner" onclick="document.getElementById('premium-offer').scrollIntoView({behavior: 'smooth'})">
+  <div class="banner-content">
+    <span class="banner-text">20 CASOS POR R$57,99 • ATÉ O FERIADÃO • CLIQUE AQUI</span>
+    <span class="banner-text">20 CASOS POR R$57,99 • ATÉ O FERIADÃO • CLIQUE AQUI</span>
+    <span class="banner-text">20 CASOS POR R$57,99 • ATÉ O FERIADÃO • CLIQUE AQUI</span>
+    <span class="banner-text">20 CASOS POR R$57,99 • ATÉ O FERIADÃO • CLIQUE AQUI</span>
+    <span class="banner-text">20 CASOS POR R$57,99 • ATÉ O FERIADÃO • CLIQUE AQUI</span>
+    <span class="banner-text">20 CASOS POR R$57,99 • ATÉ O FERIADÃO • CLIQUE AQUI</span>
+    <span class="banner-text">20 CASOS POR R$57,99 • ATÉ O FERIADÃO • CLIQUE AQUI</span>
+    <span class="banner-text">20 CASOS POR R$57,99 • ATÉ O FERIADÃO • CLIQUE AQUI</span>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
   <div style="position: relative; display: inline-block; margin-bottom: 24px;">
-    <div class="tape" style="margin-bottom: 0;">Descubra Agora • Acesso Liberado Imediatamente</div>
-    <img src="https://kdphbjyv.manus.space/images/ChatGPT-Image-6-de-jul.-de-2025-21_36_11-r8dumovzfnw2ra9rn2olvsx1m1xnhhl69fn3xukrwk.png.webp" alt="Carimbo" class="stamp-overlay" id="stampOverlay" style="width: 200px;">
+    <img src="/ofp.avif" alt="Descubra Agora" style="max-width: 100%; height: auto; border-radius: 8px;">
   </div>
-  <h1>Casos para<br><span>Resolvermos</span><br>Juntos</h1>
+  <h1>Casos para<br><span>Resolvermos</span><br><span style="position: relative; display: inline-block;">Juntos<img src="https://kdphbjyv.manus.space/images/ChatGPT-Image-6-de-jul.-de-2025-21_36_11-r8dumovzfnw2ra9rn2olvsx1m1xnhhl69fn3xukrwk.png.webp" alt="Carimbo" class="stamp-overlay" id="stampOverlay"></span></h1>
   <p class="hero-sub">Uma Experiência de Detetive Para Casais, Famílias e Amigos. Cada pista é uma armadilha. Cada escolha, um teste.</p>
   <a href="#premium-offer" class="cta-btn">Descubra o Mistério 🔍</a>
   <div style="position:relative; display:inline-block; margin-top:48px; width: min(500px, 90vw);">
@@ -501,7 +730,7 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
         <p>Se você acha que pode confiar nos seus olhos, pense novamente. A única certeza é que nem tudo é o que parece ser.</p>
         <p><strong>Mergulhe em narrativas reais repletas de suspense e desafios!</strong> Cada dossiê apresenta pistas e evidências que testarão sua lógica e habilidades de detetive.</p>
       </div>
-      <img src="https://kdphbjyv.manus.space/images/29b2aa98-r7vzvvfauiolxepq0tie8r0928ucw3hic5vg3foz7c.webp" alt="Siga as Pistas">
+      <img src="/pdf.png" alt="Siga as Pistas">
     </div>
   </div>
 </section>
@@ -620,36 +849,54 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
   <div class="container">
     <div class="offer-card">
       <div class="offer-badge">⭐ Mais Escolhido</div>
-      <img src="https://kdphbjyv.manus.space/images/ChatGPT-Image-6-de-jul.-de-2025-21_46_26-e1751849372723-300x277.png.webp" alt="Produto" class="product-img">
+      <img src="/checout.png" alt="Produto" class="product-img">
       <h2 style="font-size:32px; margin-bottom:4px;">Premium</h2>
+      
+      <div class="promo-alert">
+        <div class="promo-dot"></div>
+        <p><span class="promo-red">Queima de Arquivos:</span> Lote promocional com desconto disponível até às 23h59.</p>
+      </div>
+
       <ul class="offer-list">
         <li>Acesso vitalício ao +20 Casos Criminais completo</li>
-        <li>PDF completo com vários documentos investigativos</li>
+        <li>Casos completo com vários documentos investigativos</li>
         <li>Entrega instantânea para começar hoje</li>
         <li>Solução completa disponível caso precisem de ajuda</li>
         <li>Garantia de satisfação de 30 dias ou seu dinheiro de volta</li>
       </ul>
       <p class="timer-label">Oferta por tempo limitado:</p>
-      <div class="timer">
+      <div class="timer" style="margin-bottom: 16px;">
         <div class="timer-unit">
           <div class="timer-num" id="tmin">09</div>
           <div class="timer-label-unit">Minutos</div>
         </div>
         <div class="timer-unit" style="align-self:center; margin-bottom:20px;">
-          <span style="font-family:'Special Elite'; font-size:28px; color:var(--gold);">:</span>
+          <span style="font-family:'Special Elite'; font-size:28px; color:var(--red);">:</span>
         </div>
         <div class="timer-unit">
           <div class="timer-num" id="tsec">59</div>
           <div class="timer-label-unit">Segundos</div>
         </div>
       </div>
-      <p class="price-old">De R$ 197,90 Por</p>
-      <p class="price-new" style="margin-bottom: 8px;"><small>R$</small> 57<small>,99</small></p>
-      <p style="color: var(--gold2); font-size: 20px; font-weight: 700; margin-bottom: 28px; background: rgba(201,168,76,0.15); padding: 8px 16px; border-radius: 4px; display: inline-block; border: 1px dashed var(--gold);">ou até 9x de R$ 7,44</p>
+      <h3 style="color: #ffffff; font-size: 36px; font-weight: 900; margin-bottom: 24px; letter-spacing: 1px;">Digital</h3>
+      <div class="pricing-header">
+        <div class="discount-tag">69%OFF</div>
+        <div class="price-old">De R$220,90</div>
+      </div>
+      <div class="por-text">por</div>
+      <p class="price-new">R$67,99</p>
+      <p class="price-installments">Ou 12x de R$6,83*</p>
       <a href="https://checkout.perfectpay.com.br/pay/PPU38CQAE91?" class="cta-btn checkout-btn" style="display:block; width:100%; text-align:center; font-size:18px; padding:20px;">Começar a Investigação 🔍</a>
       <p class="stock-warning">🔴 Restam Apenas 7 Unidades Neste Valor</p>
-      <div class="trust-badges">
-        <img src="/ga.png" alt="Garantia e Segurança" style="height: 60px; filter: none;">
+      <div style="margin-top: 24px; text-align: center;">
+        <img src="/ga.png" alt="Garantia e Segurança" style="max-width: 100%; height: auto; max-height: 45px; filter: none; object-fit: contain; margin-bottom: 12px;">
+        <div class="trust-badges" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="var(--gold)" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <span style="color: var(--gold); font-size: 16px; font-weight: 500;">Pagamento 100% seguro</span>
+        </div>
       </div>
     </div>
   </div>
@@ -808,6 +1055,12 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
   setTimeout(() => {
     const stamp = document.getElementById('stampOverlay');
     if(stamp) stamp.classList.add('show');
+  }, 2000);
+
+  // Promo popup trigger
+  setTimeout(() => {
+    const promoPopup = document.getElementById('promoPopup');
+    if(promoPopup) promoPopup.classList.add('show');
   }, 2000);
 
   // Countdown timer
