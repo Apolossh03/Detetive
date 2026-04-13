@@ -401,14 +401,12 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
   <a href="#premium-offer" class="cta-btn">Descubra o Mistério 🔍</a>
   <div style="position:relative; display:inline-block; margin-top:48px; width: min(500px, 90vw);">
     <div class="carousel-container">
-      <div class="carousel-track" id="videoCarousel">
-        <video class="carousel-video" src="/videos/1.mp4" controls loop playsinline></video>
-        <video class="carousel-video" src="/videos/2.mp4" controls loop playsinline></video>
-        <video class="carousel-video" src="/videos/3.mp4" controls loop playsinline></video>
+      <div class="carousel-track">
         <video class="carousel-video" src="/videos/4.mp4" controls loop playsinline></video>
+        <video class="carousel-video" src="/videos/3.mp4" controls loop playsinline></video>
       </div>
-      <button class="carousel-btn prev" onclick="moveCarousel(-1)">&#10094;</button>
-      <button class="carousel-btn next" onclick="moveCarousel(1)">&#10095;</button>
+      <button class="carousel-btn prev">&#10094;</button>
+      <button class="carousel-btn next">&#10095;</button>
     </div>
     <div class="case-number">Caso #001</div>
   </div>
@@ -580,6 +578,24 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- SECOND CAROUSEL -->
+<section class="second-carousel" style="padding: 80px 0; background: var(--bg3); border-top: 1px solid var(--border);">
+  <div class="container" style="text-align: center;">
+    <div class="section-tag">Mais Evidências</div>
+    <h2>Continue a Investigação</h2>
+    <div style="position:relative; display:inline-block; margin-top:32px; width: min(500px, 90vw);">
+      <div class="carousel-container">
+        <div class="carousel-track">
+          <video class="carousel-video" src="/videos/2.mp4" controls loop playsinline></video>
+          <video class="carousel-video" src="/videos/1.mp4" controls loop playsinline></video>
+        </div>
+        <button class="carousel-btn prev">&#10094;</button>
+        <button class="carousel-btn next">&#10095;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="faq">
   <div class="container" style="max-width:700px">
@@ -622,39 +638,43 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
     });
   });
 
-  // Video Carousel & Intersection Observer
-  const track = document.getElementById('videoCarousel');
-  const videos = document.querySelectorAll('.carousel-video');
-  const carouselContainer = document.querySelector('.carousel-container');
-  let currentIndex = 0;
+  // Video Carousels & Intersection Observer
+  document.querySelectorAll('.carousel-container').forEach(container => {
+    const track = container.querySelector('.carousel-track');
+    const videos = container.querySelectorAll('.carousel-video');
+    const prevBtn = container.querySelector('.prev');
+    const nextBtn = container.querySelector('.next');
+    let currentIndex = 0;
 
-  function moveCarousel(direction) {
     if (videos.length > 0) {
-      videos[currentIndex].pause();
-      currentIndex += direction;
-      if (currentIndex < 0) currentIndex = videos.length - 1;
-      if (currentIndex >= videos.length) currentIndex = 0;
-      track.style.transform = `translateX(-${currentIndex * 100}%)`;
-      
-      const rect = carouselContainer.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        videos[currentIndex].play().catch(e => console.log("Autoplay prevented:", e));
-      }
-    }
-  }
-
-  if (carouselContainer && videos.length > 0) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
+      function move(direction) {
+        videos[currentIndex].pause();
+        currentIndex += direction;
+        if (currentIndex < 0) currentIndex = videos.length - 1;
+        if (currentIndex >= videos.length) currentIndex = 0;
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        const rect = container.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
           videos[currentIndex].play().catch(e => console.log("Autoplay prevented:", e));
-        } else {
-          videos[currentIndex].pause();
         }
-      });
-    }, { threshold: 0.3 });
-    observer.observe(carouselContainer);
-  }
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', () => move(-1));
+      if (nextBtn) nextBtn.addEventListener('click', () => move(1));
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            videos[currentIndex].play().catch(e => console.log("Autoplay prevented:", e));
+          } else {
+            videos[currentIndex].pause();
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(container);
+    }
+  });
 
   // Stamp animation trigger
   setTimeout(() => {
