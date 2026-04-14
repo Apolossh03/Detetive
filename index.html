@@ -463,97 +463,6 @@
     }
   }
 
-  /* PROMO POPUP */
-  .promo-popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-  }
-  .promo-popup-overlay.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .promo-popup {
-    background: #0a0a0a;
-    border: 1px solid #333;
-    border-radius: 16px;
-    padding: 32px 24px;
-    max-width: 400px;
-    width: 90%;
-    text-align: center;
-    transform: translateY(20px);
-    transition: transform 0.4s ease;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-  }
-  .promo-popup-overlay.show .promo-popup {
-    transform: translateY(0);
-  }
-  .promo-popup img {
-    max-width: 200px;
-    margin: 0 auto 24px;
-    display: block;
-  }
-  .promo-popup h2 {
-    font-size: 22px;
-    color: #fff;
-    margin-bottom: 12px;
-    line-height: 1.3;
-  }
-  .promo-popup .popup-price {
-    font-size: 32px;
-    font-weight: 900;
-    color: #fff;
-    margin-bottom: 16px;
-  }
-  .promo-popup p {
-    font-size: 14px;
-    color: #aaa;
-    line-height: 1.6;
-    margin-bottom: 24px;
-  }
-  .promo-popup .btn-ver-casos {
-    display: block;
-    width: 100%;
-    background: #cc0000;
-    color: #fff;
-    text-decoration: none;
-    padding: 16px;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    transition: background 0.2s;
-  }
-  .promo-popup .btn-ver-casos:hover {
-    background: #a30000;
-  }
-  .promo-popup .btn-close-popup {
-    background: none;
-    border: none;
-    color: #888;
-    font-size: 14px;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  .promo-popup .btn-close-popup:hover {
-    color: #fff;
-  }
-
   /* DETECTIVE POPUP */
   .detective-popup {
     position: fixed;
@@ -667,18 +576,6 @@ fbq('track', 'PageView');
 <!-- End Meta Pixel Code 2 -->
 </head>
 <body>
-
-<!-- PROMO POPUP -->
-<div class="promo-popup-overlay" id="promoPopup">
-  <div class="promo-popup">
-    <img src="/ofp.avif" alt="Operação Feriado Prolongado">
-    <h2>+20 Mistérios para Resolver Por Apenas</h2>
-    <div class="popup-price">R$67,99 🎉</div>
-    <p>Aproveite a Queima de Arquivos: o pacote completo com +20 casos sai por apenas R$67,99. E você ainda ganha acesso vitalício + entrega instantânea.</p>
-    <button class="btn-ver-casos" onclick="document.getElementById('promoPopup').classList.remove('show')">VER CASOS</button>
-    <button class="btn-close-popup" onclick="document.getElementById('promoPopup').classList.remove('show')">Não quero!</button>
-  </div>
-</div>
 
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1129488188161494&ev=PageView&noscript=1"
@@ -1053,12 +950,6 @@ src="https://www.facebook.com/tr?id=1695201625260854&ev=PageView&noscript=1"
     }, { threshold: 0.3 });
     offerObserver.observe(offerSection);
   }
-
-  // Promo popup trigger
-  setTimeout(() => {
-    const promoPopup = document.getElementById('promoPopup');
-    if(promoPopup) promoPopup.classList.add('show');
-  }, 2000);
 
   // Countdown timer
   let totalSeconds = 9 * 60 + 59;
